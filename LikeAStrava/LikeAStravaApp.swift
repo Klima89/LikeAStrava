@@ -11,10 +11,7 @@ import SwiftUI
 struct LikeAStravaApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
-                .tabItem { Label("Start", systemImage: "play.circle")}
-            HistoryView()
-                .tabItem { Label("Historia", systemImage: "clock") }
+            MainTabView()
         }
     }
 }

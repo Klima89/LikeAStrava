@@ -14,15 +14,15 @@ struct Activity: Identifiable, Codable {
     let duration: TimeInterval
     let distance: Double
     let averageSpeed: Double
-    let locations: [CLLocationCoordinate2D]
-    
+    let locations: [Coordinate]
+
     init(date: Date, duration: TimeInterval, distance: Double, averageSpeed: Double, locations: [CLLocationCoordinate2D]) {
         self.id = UUID()
         self.date = date
         self.duration = duration
         self.distance = distance
         self.averageSpeed = averageSpeed
-        self.locations = locations
+        self.locations = locations.map { Coordinate(from: $0)}
     }
 }
 
@@ -44,4 +44,3 @@ extension CLLocationCoordinate2D: Codable {
         self.init(latitude: latitude, longitude: longitude)
     }
 }
-

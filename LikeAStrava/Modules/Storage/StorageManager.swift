@@ -6,23 +6,26 @@
 //
 
 import Foundation
-import CoreData
 
 final class StorageManager {
     static let shared = StorageManager()
-    private let activityKey = "saved_activities"
+    private let activityKey: String
+    private let userDefaults: UserDefaults
 
-    private init() {}
+    private init(userDefaults: UserDefaults = .standard, activityKey: String = "saved_activities") {
+        self.userDefaults = userDefaults
+        self.activityKey = activityKey
+    }
 
     func saveActivities(_ activities: [Activity]) {
         let encoder = JSONEncoder()
         if let encoded = try? encoder.encode(activities) {
-            UserDefaults.standard.set(encoded, forKey: activityKey)
+            userDefaults.set(encoded, forKey: activityKey)
         }
     }
 
     func loadActivities() -> [Activity] {
-        if let data = UserDefaults.standard.data(forKey: activityKey) {
+        if let data = userDefaults.data(forKey: activityKey) {
             let decoder = JSONDecoder()
             if let activities = try? decoder.decode([Activity].self, from: data) {
                 return activities

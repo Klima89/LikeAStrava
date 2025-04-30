@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct MainView: View {
-    @StateObject private var viewModel = MainVievModel()
+    @StateObject private var viewModel = MainViewModel()
     
     var body: some View {
-        VStack {
-            Text("Dystans: \(viewModel.distance, specifier: "%.2f") km")
+        VStack(spacing: 20) {
+            Text("Dystans: \(String(format: "%.2f", viewModel.distance / 1000)) km")
             Text("Czas: \(viewModel.elapsedTime, specifier: "%.2f") s")
             
             Button(viewModel.isTracking ? "Stop" : "Start") {
@@ -23,6 +23,7 @@ struct MainView: View {
             .foregroundColor(.white)
             .clipShape(Capsule())
         }
+        .padding()
     }
 }
 
