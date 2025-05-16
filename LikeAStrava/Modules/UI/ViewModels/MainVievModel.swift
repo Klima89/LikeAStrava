@@ -18,14 +18,18 @@ final class MainViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     init() {
-        trackingManager.$isTracking.assign(to: &$isTracking)
-        trackingManager.$distance.assign(to: &$distance)
-        trackingManager.$elapsedTime.assign(to: &$elapsedTime)
+        trackingManager
+            .$isTracking.assign(to: &$isTracking)
+        trackingManager
+            .$distance.assign(to: &$distance)
+        trackingManager
+            .$elapsedTime.assign(to: &$elapsedTime)
     }
 
     var formattedElapsedTime: String {
         let minutes = Int(elapsedTime) / 60
         let seconds = Int(elapsedTime) % 60
+
         return String(format: "%02d:%02d", minutes, seconds)
     }
 

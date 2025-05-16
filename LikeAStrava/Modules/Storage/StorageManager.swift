@@ -12,7 +12,8 @@ final class StorageManager {
     private let activityKey: String
     private let userDefaults: UserDefaults
 
-    private init(userDefaults: UserDefaults = .standard, activityKey: String = "saved_activities") {
+    private init(userDefaults: UserDefaults = .standard,
+                 activityKey: String = "saved_activities") {
         self.userDefaults = userDefaults
         self.activityKey = activityKey
     }
