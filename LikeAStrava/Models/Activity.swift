@@ -26,22 +26,6 @@ struct Activity: Identifiable, Codable {
         self.locations = locations.map { Coordinate(from: $0)}
     }
 
-    var center: CLLocationCoordinate2D {
-        guard !locations.isEmpty else {
-            return CLLocationCoordinate2D(latitude: 0, longitude: 0)
-        }
-
-        let total = locations.reduce((lat: 0.0, lon: 0.0)) { partialResult, coordinate in
-            return (
-                lat: partialResult.lat + coordinate.latitude,
-                lon: partialResult.lon + coordinate.longitude
-            )
-        }
-
-        let count = Double(locations.count)
-        return CLLocationCoordinate2D(latitude: total.lat / count, longitude: total.lon / count)
-    }
-
     var mapRegion: MKCoordinateRegion {
         guard !locations.isEmpty else {
             return MKCoordinateRegion(
@@ -69,7 +53,22 @@ struct Activity: Identifiable, Codable {
             span: MKCoordinateSpan(latitudeDelta: spanLat, longitudeDelta: spanLon)
         )
     }
-
+// computed property dla polyline
+    var routePolyline: MKPolyline? {
+        guard locations.count > 1 else { return nil }
+        
+        let coordinates = locations.map { $0.clLocationCoordinate }
+        return MKPolyline(coordinates: coordinates, count: coordinates.count)
+    }
+    
+    //computed property dla markerów
+    var startCoordinate: CLLocationCoordinate2D? {
+        return locations.first?.clLocationCoordinate
+    }
+    
+    var endCoordinate: CLLocationCoordinate2D? {
+        return locations.last?.clLocationCoordinate
+    }
 }
 
 extension CLLocationCoordinate2D: Codable {
